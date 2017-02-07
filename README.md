@@ -1,5 +1,5 @@
-# Project1
-CS330 Project 1
+# Project2
+CS330 Project 2
 
 ## Executing code:
   1. Navigate to source directory
