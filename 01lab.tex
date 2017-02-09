@@ -1,0 +1,96 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm} % Math packages
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\usepackage{graphicx}
+
+
+% Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{equation}{section} 
+% Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} 
+% Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} 
+
+ % Removes all indentation from paragraphs
+\setlength\parindent{0pt}
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+\newcommand{\figurewidth}{0.813\columnwidth}
+
+\title{
+\fontfamily{lmss}\selectfont \normalsize 
+\textsc{Computer Science, Francis Marion School of Business} \\ [25pt]
+\horrule{1.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Chapter 1, Assignment I \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{\small Professor J. S. Lewis, M.S.} % Your name
+
+\date{}
+
+\begin{document}
+\fontfamily{lmss}\selectfont
+
+\maketitle % Print the title
+
+\begin{abstract}
+The purpose of this assignment is to make sure you can write, compile, and
+execute programs for our iRobot Create robots.
+\end{abstract}
+
+%------------------------------------------------------------------------------
+%	Robot Responses
+%------------------------------------------------------------------------------
+\section{Robot Actions and Responses 75\%}
+
+Write a program that responds in the following ways:
+\begin{enumerate}
+  \item Cycle the power button from red to green in 16 even steps. Show each
+  color for 1 second.
+  \item If the left bumper is pressed, light the robot's Check Robot LED while
+  the bumper is depressed.
+  \item if the right bumper is pressed, light the robot's Debris LED while the
+  bumper is depressed.
+\end{enumerate}
+
+\section{Analysis 25\%}
+%
+Write a short (1.5--2 page), well-formatted document detailing the way in which
+the robot is acting and responding. Be specific, such that even if you are not
+the one writing the code, you know exactly how it works.
+
+In plain English paragraphs describe the process by which each task is
+accomplished. Describe any problems you encountered or anything which worked
+differently than you expected.
+
+\end{document}
