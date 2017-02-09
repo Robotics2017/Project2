@@ -65,6 +65,18 @@ unsigned char get_bump()
 	return get_byte() & BmpBoth; //discard wheel drops
 };
 
+int get_wall()
+{
+	send_byte( CmdSensors );
+	send_byte( 27 );
+	
+	int value = get_byte();
+	value += value << 8;
+	value += get_byte();
+
+	return value;
+};
+
 /*
  * stops for 15ms
  */
@@ -88,6 +100,7 @@ int main(int args, char** argv)
 {
 	int i, j; // for indices
 	byte bmp = 0, btn = 0, pwrLed = 255, bmpLed = 0;
+	byte signalValue = 0;
 
 	start(CmdFull); //full mode
 	do
@@ -98,26 +111,35 @@ int main(int args, char** argv)
 
 			for ( j=0; j<10; ++j )
 			{
+				
+				wall = get_wall();
+				float mapping_ratio = wall / 1023.0;
+				pwrLed = mapping_ratio * 255;
+				set_led(bmpLed, pwrLed);
+				
 				bmp = get_bump(); // halts 15ms
-				// map left bump (1 bit) to left LED (3 bit)
-				bmpLed = (bmp & BmpLeft) << 2;
-				// map right bump (0 bit) to right LED (0 bit)
-				bmpLed |= bmp & BmpRight;
+				if (bmp != 0) {
+					if (bmp == 3) {
+						//drive straight backwards until the sensors are deactivated
+					} else {
+						if (bmp == 1 || bmp == 2) {
+							//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
+						}
+					}
+				}
 
 				set_led(bmpLed, pwrLed);
 
 				btn = get_button(); // halts 15ms
-				if ( btn )
+				if ( btn ) {
 					break;
+				}
 				
-				// Wait 0.1s = 100ms = 100,000us = 2(15,000)us + 70,000us,
-				// where us is a microsecond
-				usleep(70000);
+				usleep(100000);
 			}
-			if ( btn )
+			if ( btn ) {
 				break;
-
-			pwrLed = 17*i;
+			}
 		}
 		pwrLed = 0;
 	}
