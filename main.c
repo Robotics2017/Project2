@@ -40,7 +40,7 @@ void start(byte state)
 
 	// constant B115200 comes from termios.h
 	serialOpen(serial, "/dev/ttyUSB0", B115200, false);
-	send_byte( CmdStart );	// Send Start 
+	send_byte( CmdStart );	// Send Start
 	send_byte( state );	// Send state
 
 	// turn off any motors
@@ -69,7 +69,7 @@ int get_wall()
 {
 	send_byte( CmdSensors );
 	send_byte( 27 );
-	
+
 	int value = get_byte();
 	value += value << 8;
 	value += get_byte();
@@ -105,41 +105,38 @@ int main(int args, char** argv)
 	start(CmdFull); //full mode
 	do
 	{
-		for (i=15; i>-1; --i)
+		set_led(bmpLed, pwrLed);
+
+		for ( j=0; j<10; ++j )
 		{
+
+			wall = get_wall();
+			float mapping_ratio = wall / 1023.0;
+			pwrLed = mapping_ratio * 255;
 			set_led(bmpLed, pwrLed);
 
-			for ( j=0; j<10; ++j )
-			{
-				
-				wall = get_wall();
-				float mapping_ratio = wall / 1023.0;
-				pwrLed = mapping_ratio * 255;
-				set_led(bmpLed, pwrLed);
-				
-				bmp = get_bump(); // halts 15ms
-				if (bmp != 0) {
-					if (bmp == 3) {
-						//drive straight backwards until the sensors are deactivated
-					} else {
-						if (bmp == 1 || bmp == 2) {
-							//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
-						}
+			bmp = get_bump(); // halts 15ms
+			if (bmp != 0) {
+				if (bmp == 3) {
+					//drive straight backwards until the sensors are deactivated
+				} else {
+					if (bmp == 1 || bmp == 2) {
+						//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
 					}
 				}
-
-				set_led(bmpLed, pwrLed);
-
-				btn = get_button(); // halts 15ms
-				if ( btn ) {
-					break;
-				}
-				
-				usleep(100000);
 			}
+
+			set_led(bmpLed, pwrLed);
+
+			btn = get_button(); // halts 15ms
 			if ( btn ) {
 				break;
 			}
+
+			usleep(100000);
+		}
+		if ( btn ) {
+			break;
 		}
 		pwrLed = 0;
 	}
@@ -148,4 +145,3 @@ int main(int args, char** argv)
 	send_byte(CmdPwrDwn);
 	return 0;
 }
-
