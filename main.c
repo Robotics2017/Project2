@@ -96,11 +96,50 @@ void set_led(byte ledBits, byte pwrLedColor)
 	send_byte( 255 ); // set intensity high
 };
 
+/*
+Enables robot to drive directly non linearly 
+using the sign and value of both velocity values
+by moving the wheels at different velocities.
+*/
+void drive(short leftWheelVelocity, short rightWheelVelocity)
+{
+	byte left_low = leftWheelVelocity; // cast short to byte (discard high byte)
+	byte left_high = leftWheelVelocity >> 8; // bitwise shift high to low to save high byte
+	
+	byte right_low = leftWheelVelocity;
+	byte right_high = leftWheelVelocity >> 8;
+	
+	send_byte( CmdDriveWheels );
+	send_byte( right_high );
+	send_byte( right_low );
+	send_byte( left_high );
+	send_byte( left_low );
+};
+
+/*
+Enables robot to drive directly forward/backwards 
+based on the sign and value of the velocity value
+by moving the wheels at the same velocity.
+*/
+void linear_drive(short wheelVelocity)
+{
+	byte low = wheelVelocity; // cast short to byte (discard high byte)
+	byte high = wheelVelocity >> 8; // bitwise shift high to low to save high byte
+	
+	send_byte( CmdDriveWheels );
+	send_byte( high );
+	send_byte( low );
+	send_byte( high );
+	send_byte( low );
+};
+
 int main(int args, char** argv)
 {
 	int i, j; // for indices
 	byte bmp = 0, btn = 0, pwrLed = 255, bmpLed = 0;
 	byte signalValue = 0;
+	
+	bool drive_enabled = false; //remove after testing
 
 	start(CmdFull); //full mode
 	do
@@ -119,10 +158,17 @@ int main(int args, char** argv)
 			if (bmp != 0) {
 				if (bmp == 3) {
 					//drive straight backwards until the sensors are deactivated
+					if (drive_enabled) {
+						linear_drive(-500);
+					}
 				} else {
 					if (bmp == 1 || bmp == 2) {
 						//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
 					}
+				}
+			} else {
+				if (drive_enabled) {
+					linear_drive(0);
 				}
 			}
 
