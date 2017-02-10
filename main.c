@@ -120,6 +120,8 @@ void drive(short leftWheelVelocity, short rightWheelVelocity)
 Enables robot to drive directly forward/backwards 
 based on the sign and value of the velocity value
 by moving the wheels at the same velocity.
+positve wheelVelocity moves robot forward
+negative wheelVelocity moves robot in reverse
 */
 void linear_drive(short wheelVelocity)
 {
@@ -131,6 +133,29 @@ void linear_drive(short wheelVelocity)
 	send_byte( low );
 	send_byte( high );
 	send_byte( low );
+};
+
+/*
+Enables robot to drive directly angularly 
+using the sign and value of both the velocity values and the radius
+positve wheelVelocity moves robot forward
+negative wheelVelocity moves robot in reverse
+positve radius turns robot left
+negative radius turns robot right
+*/
+void angular_drive(short wheelVelocity, short radius)
+{
+	byte wheel_low = wheelVelocity; // cast short to byte (discard high byte)
+	byte wheel_high = wheelVelocity >> 8; // bitwise shift high to low to save high byte
+	
+	byte radius_low = leftWheelVelocity;
+	byte radius_high = leftWheelVelocity >> 8;
+	
+	send_byte( CmdDrive );
+	send_byte( wheel_high );
+	send_byte( wheel_low );
+	send_byte( radius_high );
+	send_byte( radius_low );
 };
 
 int main(int args, char** argv)
@@ -149,26 +174,38 @@ int main(int args, char** argv)
 		for ( j=0; j<10; ++j )
 		{
 
+			/*
+			Note: mapping_ratio may need to flipped (mapping_ratio = 1 - mapping_ratio)
+			to correct colors. Green is away from wall & Red is hitting the wall.
+			*/
 			wall = get_wall();
 			float mapping_ratio = wall / 1023.0;
 			pwrLed = mapping_ratio * 255;
 			set_led(bmpLed, pwrLed);
 
 			bmp = get_bump(); // halts 15ms
-			if (bmp != 0) {
-				if (bmp == 3) {
+			if (bmp != 0 && drive_enabled) {
+				/*
+				radius measured in mm
+				1.0m = 1000mm???
+				*/
+				short wheelVelocity = -500; // max velocity in reverse
+				short turnRadius = 1000; // in mm
+				if (bmp == BmpBoth) {
 					//drive straight backwards until the sensors are deactivated
-					if (drive_enabled) {
-						linear_drive(-500);
-					}
+					linear_drive(-500);
 				} else {
-					if (bmp == 1 || bmp == 2) {
+					if (bmp == BmpRight) {
 						//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
+						angular_drive(wheelVelocity, (-1 * turnRadius);
+					} else {
+						//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
+						angular_drive(wheelVelocity, turnRadius);
 					}
 				}
 			} else {
 				if (drive_enabled) {
-					linear_drive(0);
+					linear_drive(0); //stop
 				}
 			}
 
