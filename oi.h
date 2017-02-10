@@ -7,10 +7,12 @@
 
 // Command values
 #define CmdStart        128
+#define CmdStop         173
 #define CmdBaud         129
 #define CmdControl      130
 #define CmdSafe         131
 #define CmdFull         132
+#define CmdPwrDwn       133
 #define CmdSpot         134
 #define CmdClean        135
 #define CmdDemo         136
@@ -29,23 +31,21 @@
 
 
 // Sensor byte indices - offsets in packets 0, 5 and 6
-#define SenBumpDrop     0
+#define SenBumpDrop     7
 #define SenWall         1
 #define SenCliffL       2
 #define SenCliffFL      3
 #define SenCliffFR      4
 #define SenCliffR       5
 #define SenVWall        6
-#define SenOverC        7
 #define SenIRChar       10
-#define SenButton       11
+#define SenButton       18
 #define SenDist1        12
 #define SenDist0        13
 #define SenAng1         14
 #define SenAng0         15
 #define SenChargeState  16
 #define SenVolt1        17
-#define SenVolt0        18
 #define SenCurr1        19
 #define SenCurr0        20
 #define SenTemp         21
@@ -94,10 +94,9 @@
 #define WheelDropFront  0x10
 #define WheelDropLeft   0x08
 #define WheelDropRight  0x04
-#define BumpLeft        0x02
-#define BumpRight       0x01
-#define BumpBoth        0x03
-#define BumpEither      0x03
+#define BmpLeft         0x02
+#define BmpRight        0x01
+#define BmpBoth         0x03
 #define WheelDropAll    0x1C
 #define ButtonAdvance   0x04
 #define ButtonPlay      0x01
