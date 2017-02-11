@@ -161,22 +161,23 @@ void angular_drive(short wheelVelocity, short radius)
 
 int main(int args, char** argv)
 {
-	int j; // for indices
+	int j; // for index
 	byte bmp = 0, btn = 0, pwrLed = 255, bmpLed = 0;
+	
+	// initialize pwrLed to red
+	set_led(bmpLed, pwrLed);
 	
 	int drive_enabled = false; //remove after testing
 
 	start(CmdFull); //full mode
 	do
 	{
-		set_led(bmpLed, pwrLed);
-
 		for ( j=0; j<10; ++j )
 		{
 
 			/*
 			Note: mapping_ratio may need to flipped (mapping_ratio = 1 - mapping_ratio)
-			to correct colors. Green is away from wall & Red is hitting the wall.
+			to correct colors. Green(0) is away from wall & Red(255) is hitting the wall.
 			*/
 			int wall = get_wall();
 			float mapping_ratio = wall / 1023.0;
@@ -209,8 +210,7 @@ int main(int args, char** argv)
 				}
 			}
 
-			set_led(bmpLed, pwrLed);
-
+			//if button is pushed end program
 			btn = get_button(); // halts 15ms
 			if ( btn ) {
 				break;
@@ -218,12 +218,14 @@ int main(int args, char** argv)
 
 			usleep(100000);
 		}
+		
+		//if button is pushed end program
 		if ( btn ) {
 			break;
 		}
 		pwrLed = 0;
-	}
-	while (!btn);
+		
+	} while (!btn); //if button is pushed end program
 
 	send_byte(CmdPwrDwn);
 	return 0;
