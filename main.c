@@ -164,7 +164,7 @@ int main(int args, char** argv)
 	byte bmp = 0, btn = 0, pwrLed = 255, bmpLed = 0;
 	byte signalValue = 0;
 	
-	bool drive_enabled = false; //remove after testing
+	int drive_enabled = false; //remove after testing
 
 	start(CmdFull); //full mode
 	do
@@ -178,7 +178,7 @@ int main(int args, char** argv)
 			Note: mapping_ratio may need to flipped (mapping_ratio = 1 - mapping_ratio)
 			to correct colors. Green is away from wall & Red is hitting the wall.
 			*/
-			wall = get_wall();
+			int wall = get_wall();
 			float mapping_ratio = wall / 1023.0;
 			pwrLed = mapping_ratio * 255;
 			set_led(bmpLed, pwrLed);
@@ -197,7 +197,7 @@ int main(int args, char** argv)
 				} else {
 					if (bmp == BmpRight) {
 						//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
-						angular_drive(wheelVelocity, (-1 * turnRadius);
+						angular_drive(wheelVelocity, (-1 * turnRadius));
 					} else {
 						//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
 						angular_drive(wheelVelocity, turnRadius);
