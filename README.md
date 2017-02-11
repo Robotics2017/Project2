@@ -4,8 +4,7 @@ CS330 Project 2
 ## Executing code (New way):
   1. Navigate to source directory
   2. Right click open in terminal
-  3. `make`
-  4. `./create2`
+  3. `make && sudo ./create2`
 
 ## Executing code (Old way):
   1. Navigate to source directory
