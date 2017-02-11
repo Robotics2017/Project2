@@ -106,8 +106,8 @@ void drive(short leftWheelVelocity, short rightWheelVelocity)
 	byte left_low = leftWheelVelocity; // cast short to byte (discard high byte)
 	byte left_high = leftWheelVelocity >> 8; // bitwise shift high to low to save high byte
 	
-	byte right_low = leftWheelVelocity;
-	byte right_high = leftWheelVelocity >> 8;
+	byte right_low = rightWheelVelocity;
+	byte right_high = rightWheelVelocity >> 8;
 	
 	send_byte( CmdDriveWheels );
 	send_byte( right_high );
@@ -148,8 +148,8 @@ void angular_drive(short wheelVelocity, short radius)
 	byte wheel_low = wheelVelocity; // cast short to byte (discard high byte)
 	byte wheel_high = wheelVelocity >> 8; // bitwise shift high to low to save high byte
 	
-	byte radius_low = leftWheelVelocity;
-	byte radius_high = leftWheelVelocity >> 8;
+	byte radius_low = radius;
+	byte radius_high = radius >> 8;
 	
 	send_byte( CmdDrive );
 	send_byte( wheel_high );
