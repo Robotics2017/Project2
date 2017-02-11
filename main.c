@@ -161,9 +161,8 @@ void angular_drive(short wheelVelocity, short radius)
 
 int main(int args, char** argv)
 {
-	int i, j; // for indices
+	int j; // for indices
 	byte bmp = 0, btn = 0, pwrLed = 255, bmpLed = 0;
-	byte signalValue = 0;
 	
 	int drive_enabled = false; //remove after testing
 
