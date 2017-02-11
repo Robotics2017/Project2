@@ -197,10 +197,10 @@ int main(int args, char** argv)
 				} else {
 					if (bmp == BmpRight) {
 						//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
-						angular_drive(wheelVelocity, (-1 * turnRadius));
+						angular_drive(wheelVelocity, turnRadius); // back away curving to the left
 					} else {
 						//drive backwards in a circle away from the activated bump with an ICC of 1.0m until the sensor is deactivated
-						angular_drive(wheelVelocity, turnRadius);
+						angular_drive(wheelVelocity, (-1 * turnRadius)); // back away curving to the right
 					}
 				}
 			} else {
