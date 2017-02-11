@@ -223,7 +223,6 @@ int main(int args, char** argv)
 		if ( btn ) {
 			break;
 		}
-		pwrLed = 0;
 		
 	} while (!btn); //if button is pushed end program
 
