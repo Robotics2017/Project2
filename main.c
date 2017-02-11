@@ -9,13 +9,14 @@
 
 enum bool {false, true};
 typedef unsigned char byte;
-
 Serial* serial;
-inline void send_byte(byte b)
+
+void send_byte(byte b)
 {
 	serialSend(serial, b);
 };
-inline byte get_byte()
+
+byte get_byte()
 {
 	byte c;
 
