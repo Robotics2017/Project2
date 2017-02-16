@@ -19,10 +19,7 @@ void send_byte(byte b)
 byte get_byte()
 {
 	byte c;
-
-	               // From Roomba Open Interface (OI) Specification
-	usleep(15000); // wait 15ms to read
-
+	
 	// if there is no waiting byte, wait
 	while ( serialNumBytesWaiting(serial) == 0 )
 		usleep(15000);
@@ -164,12 +161,13 @@ int main(int args, char** argv)
 	int j; // for index
 	byte bmp = 0, btn = 0, pwrLed = 255, bmpLed = 0;
 	
+	start(CmdFull); //full mode
+	
 	// initialize pwrLed to red
 	set_led(bmpLed, pwrLed);
 	
 	int drive_enabled = false; //remove after testing
 
-	start(CmdFull); //full mode
 	do
 	{
 		for ( j=0; j<10; ++j )
