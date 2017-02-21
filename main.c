@@ -166,7 +166,7 @@ int main(int args, char** argv)
 	// initialize pwrLed to red
 	set_led(bmpLed, pwrLed);
 	
-	int drive_enabled = false; //remove after testing
+	int drive_enabled = true; //remove after testing
 
 	do
 	{
